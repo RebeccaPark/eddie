@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "parcel ./frontend/index.html"
+  },
+  "dependencies": {
+    "express": "^4.17.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  }
+}
