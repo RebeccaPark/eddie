@@ -13,17 +13,23 @@ class App extends React.Component {
   
   async componentDidMount() {
     let makeRequest = await Axios.get('http://localhost:3000/');
-    
+        
     this.setState({
       isLoading: false,
-      content: makeRequest.data.results[0],
+      content: makeRequest.data.files,
     });
   }
 
   render() {
-
+      let files;
+      if (this.state.content) {
+        files = this.state.content.map((file) => {
+          return <div>{file}</div> 
+        })
+      }
+      
       return (
-          <div>{this.state.isLoading ? 'Loading...' : this.state.content}</div>
+          <div>{this.state.isLoading ? 'Loading...' : files}</div>
       );
   }
 }

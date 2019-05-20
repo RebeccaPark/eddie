@@ -27604,7 +27604,7 @@ function (_super) {
             makeRequest = _a.sent();
             this.setState({
               isLoading: false,
-              content: makeRequest.data.results[0]
+              content: makeRequest.data.files
             });
             return [2
             /*return*/
@@ -27615,7 +27615,15 @@ function (_super) {
   };
 
   App.prototype.render = function () {
-    return react_1["default"].createElement("div", null, this.state.isLoading ? 'Loading...' : this.state.content);
+    var files;
+
+    if (this.state.content) {
+      files = this.state.content.map(function (file) {
+        return react_1["default"].createElement("div", null, file);
+      });
+    }
+
+    return react_1["default"].createElement("div", null, this.state.isLoading ? 'Loading...' : files);
   };
 
   return App;
