@@ -1,9 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Axios from 'axios';
 
-console.log('hello from tsx');
+class App extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+          isLoading: true,
+          content: null,
+      };
+  }
+  
+  async componentDidMount() {
+    let makeRequest = await Axios.get('http://localhost:3000/');
+    
+    this.setState({
+      isLoading: false,
+      content: makeRequest.data.results[0],
+    });
+  }
+
+  render() {
+
+      return (
+          <div>{this.state.isLoading ? 'Loading...' : this.state.content}</div>
+      );
+  }
+}
 
 ReactDOM.render(
-    <p>Hello</p>,
+    <App />,
     document.getElementById('app'),
 )
