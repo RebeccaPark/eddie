@@ -13,7 +13,7 @@ class App extends React.Component {
   
   async componentDidMount() {
     let makeRequest = await Axios.get('http://localhost:3000/');
-        
+
     this.setState({
       isLoading: false,
       content: makeRequest.data.files,
