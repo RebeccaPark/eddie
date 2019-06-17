@@ -3,6 +3,7 @@ var app = express();
 
 const fs = require('fs');
 const path = require('path');
+const homedir = require('os').homedir();
 
 // app.use(bodyParser.urlencoded({extended: true}));
 // app.use(bodyParser.json());
@@ -32,19 +33,18 @@ app.get('/:fileName', (req, res) => {
     })
 });
 
-app.get('/', (req, res) => { 
-    console.log('here');
-    // fs.readdir(pathName, (err, files) => {
-    //     res.json({
-    //         files: files,
-    //     })
-    // })
-
-    res.json({
-        success: 'true',
+app.get('/', (req, res) => {
+    let filesToSend;
+    fs.readdir(__dirname, (err, files) => {
+      if(!err) {  
+        res.json({
+            files: files,
+        });
+      } else {
+        return new Error(err);
+      }
     });
-  }
-);
+  });
 
 var server = app.listen(3000, function() {
    console.log('Server running at http://localhost:' + server.address().port);
