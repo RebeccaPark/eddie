@@ -4,16 +4,27 @@ import { Sidebar } from '../components/Sidebar';
 
 import './App.scss';
 
-export function App() {
+interface stateInterface {
+  files: any[],
+};
 
-  React.useEffect(() => {
+export class App extends React.Component<{}, stateInterface> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: []
+    };
+  }
+  componentDidMount() {
     API.get('/')
-      .then(res => {console.log(res); console.log(res.data);});
-  }, [])
-
-  return(
-    <div className="app">
-      <Sidebar></Sidebar>
-    </div>
-  );
+      .then(res => { this.setState({ files: res.data.files; })}; //console.log('res.data: ', res.data);})
+      //.then(() => { console.log('files: ', files); });
+  }
+  render() {
+    return (
+      <div className="app">
+        <Sidebar files={this.state.files}></Sidebar>
+      </div>
+    );
+  }
 };
