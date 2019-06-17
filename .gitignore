@@ -1,5 +1,6 @@
 */node_modules
 *~
 yarn-error.log
-.cache/*
-dist/*
+*/.cache/*
+*/dist/*
+\#README.md\#

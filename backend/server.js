@@ -15,29 +15,37 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-const pathName = '/Users/rebeccapark/Documents';
-
-app.get('/', (req, res) => { 
-    fs.readdir(pathName, (err, files) => {
-        res.json({
-            files: files,
-        })
-    })
-  }
-);
+const pathName = '/Users/rebecca/Projects/eddie/README.md';
 
 app.get('/:fileName', (req, res) => {
+    console.log('here2');
     const fileName = req.params.fileName;
+    console.log('fileName: ', fileName);
     console.log('dirname: ', __dirname);
+    //console.log('req: ', req);
 
-    const filePath = path.join('/Users/rebeccapark/Documents', fileName);
+    const filePath = path.join('/Users/rebecca/projects', fileName);
     fs.readFile(filePath, {encoding: 'utf-8'}, (err, data) => {
         res.json({
-            content: data,
+            content: 'hi',
         })
     })
 });
 
-app.listen(3000, function() {
-    console.log('Example app listening on port 3000!');
+app.get('/', (req, res) => { 
+    console.log('here');
+    // fs.readdir(pathName, (err, files) => {
+    //     res.json({
+    //         files: files,
+    //     })
+    // })
+
+    res.json({
+        success: 'true',
+    });
+  }
+);
+
+var server = app.listen(3000, function() {
+   console.log('Server running at http://localhost:' + server.address().port);
 })
