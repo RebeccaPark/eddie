@@ -19,7 +19,7 @@ export class App extends React.Component<{}, stateInterface> {
   async componentDidMount() {
     const response = await API.get('/');
     this.setState({
-      files: response
+      files: response.data.files
     });
       //.then(res => { this.setState({ files: res.data.files })}; //console.log('res.data: ', res.data);})
       //.then(() => { console.log('files: ', files); });
