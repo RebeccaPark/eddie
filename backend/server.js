@@ -55,26 +55,8 @@ app.get('/', (req, res) => {
 
         return Promise.all(promises);
     }).then((result) => {
-        console.log(result);
         res.json({ files: result });
     })
-
-    // res.json({
-
-    // })
-
-    // files1.forEach(file => {
-    //     fs.lstat(`${homedir}/${file}`, (err, res) => {
-    //         filesInfo.push({
-    //             name: file,
-    //             isDirecotry: res.isDirectory(),
-    //         });
-    //     })
-    // });
-
-    // promise1.then((info) => res.json({
-    //     files: info,
-    // }));
 });
 
 var server = app.listen(3000, function () {
