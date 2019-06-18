@@ -4,8 +4,14 @@ import { Sidebar } from '../components/Sidebar';
 
 import './App.scss';
 
+interface fileInfo {
+  name: string,
+  isDirectory: boolean,
+  path: string,
+};
+
 interface stateInterface {
-  files: any[],
+  files: fileInfo[],
 };
 
 export class App extends React.Component<{}, stateInterface> {
@@ -14,6 +20,7 @@ export class App extends React.Component<{}, stateInterface> {
     this.state = {
       files: []
     };
+    this.onPathClick = this.onPathClick.bind(this);
   }
 
   async componentDidMount() {
@@ -21,14 +28,26 @@ export class App extends React.Component<{}, stateInterface> {
     this.setState({
       files: response.data.files
     });
-      //.then(res => { this.setState({ files: res.data.files })}; //console.log('res.data: ', res.data);})
-      //.then(() => { console.log('files: ', files); });
+  }
+
+  async onPathClick(fileInfo: fileInfo) {
+    console.log('fileInfo: ', fileInfo);
+    const response = await API.get('/open', {
+      params: {
+        isDirectory: fileInfo.isDirectory,
+        path: fileInfo.path
+      }
+    });
+    console.log('clicked', fileInfo);
   }
 
   render() {
     return (
       <div className="app">
-        <Sidebar files={this.state.files}></Sidebar>
+        <Sidebar 
+          files={this.state.files}
+          onPathClick={this.onPathClick}
+        />
       </div>
     );
   }

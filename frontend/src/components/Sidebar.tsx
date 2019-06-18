@@ -2,25 +2,21 @@ import React from 'react';
 import './Sidebar.scss';
 
 export function Sidebar(props) {
-   console.log(props);
-
-  // React.useEffect(() => {
-  //   console.log('sidebar props: ', props);
-  // }, [props])
   return(
     <div className="sidebar">
       { 
         props.files && props.files.map((file) => {
         return (
           <div>
-            <span className="fa fa-folder"></span>
-            <div>{file.name}</div>
+            {
+              file.isDirectory && <span className="far fa-folder"></span>
+            }
+            {
+              !file.isDirectory && <span className="far fa-file"></span>
+            }
+            <span onClick={() => props.onPathClick(file)}>{file.name}</span>
           </div>
         )})
-      }
-      {
-        !props.files && ''
-      }
       }
     </div>
   )
