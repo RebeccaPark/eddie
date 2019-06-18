@@ -1,8 +1,8 @@
+var utility = require('./utility/utility');
+
 var express = require('express');
 var app = express();
 
-const fs = require('fs');
-const path = require('path');
 const homedir = require('os').homedir();
 
 // app.use(bodyParser.urlencoded({extended: true}));
@@ -16,44 +16,16 @@ app.all('*', function (req, res, next) {
 });
 
 app.get('/open', (req, res) => {
-    console.log('req.query: ', req.query);
-    //const fileName = req.params.fileName;
-    //console.log('fileName: ', fileName);
-    console.log('dirname: ', __dirname);
-    //console.log('req: ', req);
-
-    // const filePath = path.join('/Users/rebecca/projects', fileName);
-    // fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
-    //     res.json({
-    //         content: 'hi',
-    //     })
-    // })
+    const { isDirectory, path } = req.query;
+    if(isDirectory) {
+        utility.openDirectory(path, res);
+    } else {
+        utility.openFile(path, res);
+    }
 });
 
 app.get('/', (req, res) => {
-    const promise1 = () => new Promise((resolve, reject) => {
-        return fs.readdir(homedir, (err, files) => {
-            if (err) {
-                reject(err);
-            }
-            //filtering out hidden files
-            resolve(files.filter(file => !(/(^|\/)\.[^\/\.]/g).test(file)));
-        });
-    });
-
-    promise1().then((files) => {
-        const promises = files.map((file) => {
-            return new Promise((resolve, reject) => {
-                fs.lstat(`${homedir}/${file}`, (err, res) => {
-                    resolve({name: file, isDirectory: res.isDirectory(), path: `${homedir}/${file}`});
-                });
-            })
-        })
-
-        return Promise.all(promises);
-    }).then((result) => {
-        res.json({ files: result });
-    })
+    utility.openDirectory(homedir, res);
 });
 
 var server = app.listen(3000, function () {
