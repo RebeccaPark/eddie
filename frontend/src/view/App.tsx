@@ -8,6 +8,8 @@ interface fileInfo {
   name: string,
   isDirectory: boolean,
   path: string,
+  files?: fileInfo[],
+  fileContent?: string,
 };
 
 interface stateInterface {
@@ -31,17 +33,15 @@ export class App extends React.Component<{}, stateInterface> {
   }
 
   async onPathClick(fileInfo: fileInfo) {
-    console.log('fileInfo: ', fileInfo);
     const response = await API.get('/open', {
       params: {
         isDirectory: fileInfo.isDirectory,
         path: fileInfo.path
       }
     });
-    console.log('clicked', fileInfo);
   }
 
-  render() {
+  render() {               
     return (
       <div className="app">
         <Sidebar 
