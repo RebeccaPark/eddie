@@ -14,13 +14,15 @@ interface fileInfo {
 
 interface stateInterface {
   files: fileInfo[],
+  activeDir: number[],
 };
 
 export class App extends React.Component<{}, stateInterface> {
   constructor(props) {
     super(props);
     this.state = {
-      files: []
+      files: [],
+      activeDir: [],
     };
     this.onPathClick = this.onPathClick.bind(this);
   }
@@ -32,13 +34,21 @@ export class App extends React.Component<{}, stateInterface> {
     });
   }
 
-  async onPathClick(fileInfo: fileInfo) {
-    const response = await API.get('/open', {
+  async onPathClick(fileInfo: fileInfo, mapping: number[]) {
+    console.log('mapping: ', mapping);
+    
+    const response = await API.get('/open', { 
       params: {
         isDirectory: fileInfo.isDirectory,
         path: fileInfo.path
       }
     });
+    
+    const { files } = this.state;
+    files[mapping[0]].files = response.data.files;
+    this.setState({
+      files
+    }, () => console.log(this.state));
   }
 
   render() {               
