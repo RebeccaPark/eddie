@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './FileSystemObj';
+import './FileSystemObject';
 import './Sidebar.scss';
-import { FileSystemObj } from './FileSystemObj';
+import { FileSystemObject } from './FileSystemObject';
 
 export function Sidebar(props) {
 
@@ -18,19 +18,21 @@ export function Sidebar(props) {
       }
 
       return (
-        <div>
+        <div className="fileSystemGroup">
           <div onClick={() => props.onPathClick(file, mapping2)}>
-            <FileSystemObj file={file}/>
+            <FileSystemObject 
+              file={file}
+              onPathClick={props}/>
           </div>
           {displaySubLevel}
         </div>
-      )
+      );
     })
 
     return (
-      <div>
+      <React.Fragment>
         {display}
-      </div>
+      </React.Fragment>
     )
   }
 

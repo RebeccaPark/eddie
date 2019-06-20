@@ -1,0 +1,12 @@
+.fileSystemObject {
+  margin: 2px 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+
+  .fileSystemObject_icon {
+    font-size: 13px;
+    color: #eee;
+    margin-right: 7px;
+  }
+}

@@ -1,6 +1,14 @@
 .sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   color: #fff;
   background-color: #516473;
-  height: 100%;
   width: 300px;
+  padding: 15px;
+  overflow-y: scroll;
+}
+
+.fileSystemGroup {
+  padding-left: 15px;
 }

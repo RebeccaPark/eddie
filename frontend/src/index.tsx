@@ -4,5 +4,5 @@ import { App } from './view/app';
 
 ReactDOM.render(
     <App />,
-    document.getElementById('app'),
+    document.getElementById('app_container'),
 )
