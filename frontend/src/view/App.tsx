@@ -35,7 +35,6 @@ export class App extends React.Component<{}, stateInterface> {
   }
 
   async onPathClick(fileInfo: fileInfo, mapping: number[]) {
-    console.log('mapping: ', mapping);
     
     const response = await API.get('/open', { 
       params: {
@@ -46,24 +45,18 @@ export class App extends React.Component<{}, stateInterface> {
     
     const { files } = this.state;
     let subFiles:any = files[mapping[0]];
-    //console.log('subFiles: ', subFiles);
     for(let i=0; i < mapping.length; i++) {
       if(i !== 0) {
         subFiles = subFiles.files[mapping[i]];
       }
-      console.log('subFiles: ', subFiles);
-      console.log('outside if');
       if (i === mapping.length - 1) {
-        console.log('inside if');
         subFiles.files = response.data.files;
       }
     } 
-
-    console.log('files: ', files);
-
+    
     this.setState({
       files
-    }, () => return console.log('this.state.files: ', this.state.files));
+    });
   }
 
   render() {               

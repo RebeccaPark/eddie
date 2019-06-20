@@ -10,13 +10,10 @@ export function Sidebar(props) {
 
     const display = files.map((file, index) => {
       const mapping2 = mapping.slice();
-      //console.log('here1: ', mapping2.slice());
       mapping2.push(index);
-      //console.log('here2: ', mapping2.slice());
       let displaySubLevel;
 
       if (file.files && file.files.length > 0) {
-        //console.log('here3: ', mapping2.slice());
         displaySubLevel = renderFileStructure(file.files, mapping2);
       }
 
