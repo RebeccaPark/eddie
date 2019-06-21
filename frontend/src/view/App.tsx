@@ -15,6 +15,7 @@ interface fileInfo {
 interface stateInterface {
   files: fileInfo[],
   activeDir: number[],
+  displayContent: string,
 };
 
 export class App extends React.Component<{}, stateInterface> {
@@ -23,6 +24,7 @@ export class App extends React.Component<{}, stateInterface> {
     this.state = {
       files: [],
       activeDir: [],
+      displayContent: '',
     };
     this.onPathClick = this.onPathClick.bind(this);
   }
@@ -35,37 +37,45 @@ export class App extends React.Component<{}, stateInterface> {
   }
 
   async onPathClick(fileInfo: fileInfo, mapping: number[]) {
-    
-    const response = await API.get('/open', { 
+
+    const response = await API.get('/open', {
       params: {
         isDirectory: fileInfo.isDirectory,
         path: fileInfo.path
       }
     });
-    
-    const { files } = this.state;
-    let subFiles:any = files[mapping[0]];
-    for(let i=0; i < mapping.length; i++) {
-      if(i !== 0) {
-        subFiles = subFiles.files[mapping[i]];
+
+    if (fileInfo.isDirectory) {
+      const { files } = this.state;
+      let subFiles: any = files[mapping[0]];
+
+      for (let i = 0; i < mapping.length; i++) {
+        if (i !== 0) {
+          subFiles = subFiles.files[mapping[i]];
+        }
+        if (i === mapping.length - 1) {
+          subFiles.files = response.data.files;
+        }
       }
-      if (i === mapping.length - 1) {
-        subFiles.files = response.data.files;
-      }
-    } 
-    
-    this.setState({
-      files
-    });
+
+      this.setState({
+        files
+      });
+    } else {
+      this.setState({
+        displayContent: response.data.fileContent
+      });
+    }
   }
 
-  render() {               
+  render() {
     return (
       <div className="app">
-        <Sidebar 
+        <Sidebar
           files={this.state.files}
           onPathClick={this.onPathClick}
         />
+        {this.state.displayContent}
       </div>
     );
   }

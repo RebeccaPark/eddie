@@ -16,10 +16,13 @@ app.all('*', function (req, res, next) {
 });
 
 app.get('/open', (req, res) => {
-    const { isDirectory, path } = req.query;
+    let { isDirectory, path } = req.query;
+    isDirectory = JSON.parse(isDirectory);
     if(isDirectory) {
+        console.log('opendirectory');
         utility.openDirectory(path, res);
     } else {
+        console.log('openfile');
         utility.openFile(path, res);
     }
 });

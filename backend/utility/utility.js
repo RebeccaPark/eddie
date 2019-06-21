@@ -2,6 +2,7 @@ const fs = require('fs');
 
 function openFile (path, res) {
   fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
+      console.log('data: ', data);
       res.json({
           fileContent: data
       });
@@ -14,7 +15,6 @@ function openDirectory (path, res) {
           if (err) {
               reject(err);
           }
-          //filtering out hidden files
           resolve(files.filter(file => !(/(^|\/)\.[^\/\.]/g).test(file)));
       });
   });
