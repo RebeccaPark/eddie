@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { API } from '../api/API';
 import { Sidebar } from '../components/Sidebar';
+import { ContentArea } from '../components/ContentArea';
 
 import './App.scss';
 
@@ -75,7 +76,9 @@ export class App extends React.Component<{}, stateInterface> {
           files={this.state.files}
           onPathClick={this.onPathClick}
         />
-        {this.state.displayContent}
+        <ContentArea 
+          content={this.state.displayContent}
+        />
       </div>
     );
   }
