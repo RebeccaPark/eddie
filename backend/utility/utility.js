@@ -34,11 +34,12 @@ function openDirectory (path, res) {
   })
 }
 
-function writeFile(fileName, content) {
+function writeFile(fileName, content, res) {
     fs.writeFile(fileName, content, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
-    })
+        res.json({save: 'success'});
+    });
 }
 
 module.exports.openDirectory = openDirectory;

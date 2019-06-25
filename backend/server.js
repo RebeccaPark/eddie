@@ -2,6 +2,7 @@ var utility = require('./utility/utility');
 
 var express = require('express');
 var app = express();
+app.use(express.json());
 
 const homedir = require('os').homedir();
 
@@ -29,8 +30,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/save/:filename', (req, res) => {
-    console.log('filename: ', req.param.filename);
-    //utility.writeFile();    
+    console.log('body: ', req.body);
+    const path = `${homedir}/document/eddie/${req.params.filename}`
+    utility.writeFile(req.params.filename, req.body.content, res);
 })
 
 var server = app.listen(3000, function () {
