@@ -17,6 +17,7 @@ interface stateInterface {
   files: fileInfo[],
   activeDir: number[],
   displayContent: string,
+  selectFileName: string,
 };
 
 export class App extends React.Component<{}, stateInterface> {
@@ -26,6 +27,7 @@ export class App extends React.Component<{}, stateInterface> {
       files: [],
       activeDir: [],
       displayContent: '',
+      selectFileName: '',
     };
     this.onPathClick = this.onPathClick.bind(this);
   }
@@ -64,6 +66,7 @@ export class App extends React.Component<{}, stateInterface> {
       });
     } else {
       this.setState({
+        selectFileName: fileInfo.name,
         displayContent: response.data.fileContent
       });
     }
@@ -76,8 +79,9 @@ export class App extends React.Component<{}, stateInterface> {
           files={this.state.files}
           onPathClick={this.onPathClick}
         />
-        <ContentArea 
+        <ContentArea
           content={this.state.displayContent}
+          title={this.state.selectFileName}
         />
       </div>
     );

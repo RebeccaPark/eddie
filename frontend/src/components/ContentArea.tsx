@@ -19,6 +19,12 @@ export class ContentArea extends React.Component<any, any> {
         content: change.content,
       });
     }
+
+    if (change.title) {
+      this.setState({
+        title: change.title,
+      })
+    }
   }
 
   onTitleChange(e) {
