@@ -1,4 +1,6 @@
-var utility = require('./utility/utility');
+const fs = require('fs');
+
+const utility = require('./utility/utility');
 
 var express = require('express');
 var app = express();
@@ -29,10 +31,16 @@ app.get('/', (req, res) => {
     utility.openDirectory(homedir, res);
 });
 
-app.post('/save/:filename', (req, res) => {
-    console.log('body: ', req.body);
-    const path = `${homedir}/document/eddie/${req.params.filename}`
-    utility.writeFile(req.params.filename, req.body.content, res);
+app.post('/save/:filename', async (req, res) => {
+    const files = await utility.openDirectory(`${homedir}/documents`, null);
+    const existingEddieDirectory = files.find(file => {
+        return file.name === 'eddie' && file.isDirectory
+    });
+    if (!existingEddieDirectory){
+        fs.mkdirSync(`${homedir}/documents/eddie/`);
+    }
+    const path = `${homedir}/documents/eddie/${req.params.filename}`;
+    utility.writeFile(path, req.body.content, res);
 })
 
 var server = app.listen(3000, function () {

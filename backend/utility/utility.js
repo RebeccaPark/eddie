@@ -10,6 +10,7 @@ function openFile (path, res) {
 }
 
 function openDirectory (path, res) {
+  let toReturn;
   const promise1 = () => new Promise((resolve, reject) => {
       return fs.readdir(path, (err, files) => {
           if (err) {
@@ -19,7 +20,7 @@ function openDirectory (path, res) {
       });
   });
 
-  promise1().then((files) => {
+  return promise1().then((files) => {
       const promises = files.map((file) => {
           return new Promise((resolve, reject) => {
               fs.lstat(`${path}/${file}`, (err, res) => {
@@ -30,7 +31,13 @@ function openDirectory (path, res) {
 
       return Promise.all(promises);
   }).then((result) => {
-      res.json({ files: result });
+      if(res) {
+        res.json({ files: result });
+      }
+      
+      if(!res) {
+        return result;
+      }
   })
 }
 
